@@ -33,5 +33,5 @@
     - wget
     - influxdb-client
 
-- include: configurations.yml
+- include: config.yml
 - include: python.yml

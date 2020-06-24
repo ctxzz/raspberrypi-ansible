@@ -1,5 +1,9 @@
 # Raspberry Pi Ansible
 
+## Bootstrapping
+
+$ sudo pip install ansible
+
 ## Running the playbook
 
- $ sudo ansible-playbook local.yml 
+$ sudo ansible-playbook site.yml 
