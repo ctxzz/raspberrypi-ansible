@@ -1,0 +1,15 @@
+---
+- name: Install serveral python libraries and tools
+  become: True
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - libboost-python-dev # for RF24 python library
+    - python-dev
+    - python-pip
+    - python-setuptools
+
+- name: pip install
+  pip:
+    name:
+      - grovepi

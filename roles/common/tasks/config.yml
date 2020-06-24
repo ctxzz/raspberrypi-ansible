@@ -1,0 +1,26 @@
+---
+- name: Copy vimrc in place
+  copy:
+    src: vimrc
+    dest: "{{ ansible_env.HOME }}/.vimrc"
+
+- name: Package manager for VIM
+  git:
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    dest: /home/pi/.vim/bundle/Vundle.vim
+
+- name: Copy gitconfig in place
+  copy:
+    src: gitconfig
+    dest: "{{ ansible_env.HOME }}/.gitconfig"
+
+- name: Set VISUAL variable
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.profile"
+    line: "export VISUAL=vim"
+
+- name: Set EDITOR variable
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.profile"
+    line: 'export EDITOR="$VISUAL"'
+
