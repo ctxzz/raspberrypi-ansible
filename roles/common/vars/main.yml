@@ -16,7 +16,6 @@ macaddrs:
         enable_spi: True
         enable_i2c: True
         enable_serial: True
-        enable_serial_hw: True
         enable_onewire: False
         enable_rgpio: False
         extra_software:

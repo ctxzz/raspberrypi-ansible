@@ -67,12 +67,6 @@
   tags:
     - raspi
 
-- name: enable/disable hardware serial
-  command: "raspi-config nonint do_serial_hw {{ 0 if myconfig.enable_serial_hw else 1 }}"
-  when: "'enable_serial_hw' in myconfig and myconfig.enable_serial_hw != raspi_serial_hw_enabled"
-  tags:
-    - raspi
-
 - name: enable/disable onewire
   command: "raspi-config nonint do_onewire {{ 0 if myconfig.enable_onewire else 1 }}"
   when: "'enable_onewire' in myconfig and myconfig.enable_onewire != raspi_onewire_enabled"

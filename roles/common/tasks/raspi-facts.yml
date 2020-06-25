@@ -103,14 +103,6 @@
   tags:
     - raspi
 
-- name: get hardware serial enabled status
-  shell: "raspi-config nonint get_serial_hw"
-  register: raspi_serial_hw_disabled
-  changed_when: False
-  check_mode: no
-  tags:
-    - raspi
-
 - name: get onewire enabled status
   shell: "raspi-config nonint get_onewire"
   register: raspi_onewire_disabled
