@@ -1,0 +1,37 @@
+---
+macaddrs:
+    dc:a6:32:8c:ef:01:
+        hostname: "omata-raspberrypi4-1"
+        domain: "local"
+        locale: "ja_JP.UTF-8"
+        timezone: "Asia/Tokyo"
+        xkblayout: "us"
+        wifi_country: "JP"
+        enable_gui: True
+        enable_autologin: False
+        enable_bootwait: False
+        enable_bootsplash: False
+        enable_camera: False
+        enable_vnc: True
+        enable_spi: True
+        enable_i2c: True
+        enable_serial: True
+        enable_serial_hw: True
+        enable_onewire: False
+        enable_rgpio: False
+        extra_software:
+          - "libglib2.0-dev"
+          - "libncurses-dev"
+          - "libperl-dev"
+
+
+### Users that must be present on the system
+create_users:
+  - name: omata
+    comment: "omata"
+    uid: 1024
+    group: users
+    # don't include the group from 'group:' above in the 'groups:' below; this
+    # breaks idempotency for some reason
+    groups: "adm,dialout,sudo,audio,video,plugdev,games,input,netdev,spi,i2c,gpio"
+    pubkey: "https://github.com/ctxzz.keys"

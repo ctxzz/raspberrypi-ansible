@@ -1,37 +1,78 @@
 ---
-- name: Copy my SSH key
-  authorized_key:
-    user: "{{ ansible_user }}"
-    key:  "https://github.com/ctxzz.keys"
 
-- name: apt-get update
-  become: True
-  apt:
-    update_cache: yes
-    cache_valid_time: 86400 # once a day
+# Gather facts specific to the Raspberry Pi platform
+- include: raspi-config.yml
+- include: linux-config.yml
 
-- name: Make sure locale is present
-  become: True
-  locale_gen:
-    name: ja_JP.UTF-8
+# Basic hostname setup
+- name: Get MAC address
+  debug: 
+    msg: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}"
+  tags:
+    - raspi
+    - sw
 
+- name: store MAC address
+  set_fact:
+    my_macaddr: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}"
+  tags:
+    - raspi
+    - sw
+
+- name: store system configuration
+  set_fact:
+    myconfig: "{{ macaddrs[my_macaddr] }}"
+  tags:
+    - raspi
+    - sw
+
+- name: set hostname
+  shell: "raspi-config nonint do_hostname {{ myconfig.hostname }}"
+  when: raspi_hostname != myconfig.hostname
+
+- name: update /etc/hosts with new hostname
+  lineinfile:
+    dest=/etc/hosts
+    regexp="^{{ ansible_default_ipv4.address }}"
+    line="{{ ansible_default_ipv4.address }}{{'\t'}}{{ myconfig.hostname }}.{{ myconfig.domain }}{{'\t'}}{{ myconfig.hostname }}"
+    state=present
+
+# Set timezone
 - name: set timezone
-  become: True
-  timezone:
-    name: Asia/Tokyo
+  command: "timedatectl set-timezone {{ myconfig.timezone }}"
+  when: linux_tz != myconfig.timezone
 
-- name: Install common packages
-  become: True
-  apt:
-    name: "{{ item }}"
-    state: installed
-  with_items:
-    - bundler
-    - git
-    - ruby
-    - vim
-    - wget
-    - influxdb-client
+# Set locale
+- name: set locale
+  command: "raspi-config nonint do_change_locale {{ myconfig.locale }}"
+  when: "'locale' in myconfig and linux_locale != myconfig.locale"
 
-- include: config.yml
+# Set X keyboard layout
+- name: set X11 keyboard layout
+  command: "raspi-config nonint do_configure_keyboard {{ myconfig.xkblayout }}"
+  when: "'xkblayout' in myconfig and myconfig.xkblayout != linux_xkblayout"
+
+# Set wifi country
+- name: set wifi country
+  command: "raspiconfig nonint do_wifi_country {{ myconfig.wifi_country }}"
+  when: "'wifi_country' in myconfig and myconfig.wifi_country != raspi_wifi_country"
+
+# Enable sshd
+- name: disable ssh login for user pi
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    line="DenyUsers pi"
+    state=present
+  tags:
+    - raspi
+
+- name: enable SSH via raspi-config
+  shell: "raspi-config nonint do_ssh 0"
+  when: not raspi_ssh_enabled
+  tags:
+    - raspi
+
+# Other tasks
+- include: software.yml
+- include: users.yml
 - include: python.yml
