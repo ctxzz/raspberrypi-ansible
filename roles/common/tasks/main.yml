@@ -1,8 +1,8 @@
 ---
 
 # Gather facts specific to the Raspberry Pi platform
-- include: raspi-config.yml
-- include: linux-config.yml
+- include: raspi-facts.yml
+- include: linux-facts.yml
 
 # Basic hostname setup
 - name: Get MAC address
@@ -76,3 +76,4 @@
 - include: software.yml
 - include: users.yml
 - include: python.yml
+- include: raspi-config.yml
