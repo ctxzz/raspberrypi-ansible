@@ -9,6 +9,11 @@
     repo: https://github.com/VundleVim/Vundle.vim.git
     dest: /home/pi/.vim/bundle/Vundle.vim
 
+- name: Copy grove-influxdb-client in place
+  copy:
+    src: grove-influxdb-client.py
+    dest: "{{ ansible_env.HOME }}/grove-influxdb-client.py"
+
 - name: Copy gitconfig in place
   copy:
     src: gitconfig
