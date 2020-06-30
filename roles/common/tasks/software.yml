@@ -32,7 +32,8 @@
       - git
       - python-pip
       - ufw
-      - influxdb-client
+      - fcitx-mozc
+      - jfbterm
   tags:
     - sw
 

@@ -9,7 +9,9 @@
     - python-pip
     - python-setuptools
 
-# - name: pip install
-#   pip:
-#     name:
-#       - grovepi
+- name: pip install
+  pip3:
+    name:
+      - grovepi
+      - influxdb-client
+      - numpy
