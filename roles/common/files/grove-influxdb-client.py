@@ -53,17 +53,18 @@ if __name__ == '__main__':
     grovepi.pinMode(temp_humidity_sensor, "INPUT")
 
     print("start!!!")
+    timestamp = datetime.utcnow()
 
     while True:
         light, sound, temp, humidity = get_sensor()
         sequence = []
-        lightPoint = Point(measurement).tag('device', 'raspberry-pi').field("light", light).time(time=datetime.utcnow()).to_line_protocol()
+        lightPoint = Point(measurement).tag('device', 'raspberry-pi').field("light", light).time(time=timestamp).to_line_protocol()
         sequence.append(lightPoint)
-        soundPoint = Point(measurement).tag('device', 'raspberry-pi').field("sound", sound).time(time=datetime.utcnow()).to_line_protocol()
+        soundPoint = Point(measurement).tag('device', 'raspberry-pi').field("sound", sound).time(time=timestamp).to_line_protocol()
         sequence.append(soundPoint)
-        tempPoint = Point(measurement).tag('device', 'raspberry-pi').field("tempreture", temp).time(time=datetime.utcnow()).to_line_protocol()
+        tempPoint = Point(measurement).tag('device', 'raspberry-pi').field("tempreture", temp).time(time=timestamp).to_line_protocol()
         sequence.append(tempPoint)
-        humidPoint = Point(measurement).tag('device', 'raspberry-pi').field("humidity", humidity).time(time=datetime.utcnow()).to_line_protocol()
+        humidPoint = Point(measurement).tag('device', 'raspberry-pi').field("humidity", humidity).time(time=timestamp).to_line_protocol()
         sequence.append(humidPoint)
         print(sequence)
 

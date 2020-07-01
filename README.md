@@ -2,7 +2,7 @@
 
 ## Bootstrapping
 
-$ sudo pip install ansible
+$ sudo pip3 install ansible
 
 ## Running the playbook
 
@@ -11,7 +11,8 @@ $ sudo ansible-playbook site.yml
 ## After running the playbook
 
 1. sudo passwd [USERNAME]
-2. usermod --lock pi
+2. sudo reboot
+3. # usermod --lock pi
 
 ## Setting up GrovePi
 

@@ -1,7 +1,7 @@
 ---
 macaddrs:
     dc:a6:32:8c:ef:01:
-        hostname: "omata-raspberrypi4-1"
+        hostname: "raspberrypi"
         domain: "local"
         locale: "ja_JP.UTF-8"
         timezone: "Asia/Tokyo"
