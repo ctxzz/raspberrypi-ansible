@@ -12,7 +12,7 @@ $ sudo ansible-playbook site.yml
 
 1. sudo passwd [USERNAME]
 2. sudo reboot
-3. # usermod --lock pi
+3. // usermod --lock pi // grovepi need pi user
 
 ## Setting up GrovePi
 
