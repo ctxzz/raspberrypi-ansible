@@ -62,7 +62,7 @@ if __name__ == '__main__':
         sequence.append(lightPoint)
         soundPoint = Point(measurement).tag('device', 'raspberry-pi').field("sound", sound).time(time=timestamp).to_line_protocol()
         sequence.append(soundPoint)
-        tempPoint = Point(measurement).tag('device', 'raspberry-pi').field("tempreture", temp).time(time=timestamp).to_line_protocol()
+        tempPoint = Point(measurement).tag('device', 'raspberry-pi').field("temperature", temp).time(time=timestamp).to_line_protocol()
         sequence.append(tempPoint)
         humidPoint = Point(measurement).tag('device', 'raspberry-pi').field("humidity", humidity).time(time=timestamp).to_line_protocol()
         sequence.append(humidPoint)
