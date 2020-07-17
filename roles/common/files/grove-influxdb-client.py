@@ -66,6 +66,7 @@ if __name__ == '__main__':
         sequence.append(tempPoint)
         humidPoint = Point(measurement).tag('device', 'raspberry-pi').field("humidity", humidity).time(time=timestamp).to_line_protocol()
         sequence.append(humidPoint)
+        print("-------------------------------------")
         print(sequence)
 
         try:
