@@ -53,10 +53,10 @@ if __name__ == '__main__':
     grovepi.pinMode(temp_humidity_sensor, "INPUT")
 
     print("start!!!")
-    timestamp = datetime.utcnow()
 
     while True:
         light, sound, temp, humidity = get_sensor()
+        timestamp = datetime.utcnow()
         sequence = []
         lightPoint = Point(measurement).tag('device', 'raspberry-pi').field("light", light).time(time=timestamp).to_line_protocol()
         sequence.append(lightPoint)
@@ -75,6 +75,7 @@ if __name__ == '__main__':
                 error_flag = False
                 backuped_sequence = []
 
-        except:
+        except Exception as e:
+            print(e)
             error_flag = True
             backuped_sequence.extend(sequence)
